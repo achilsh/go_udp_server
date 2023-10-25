@@ -59,6 +59,7 @@ func (p *PackageDataProcess) ReadData() ([]byte, error) {
 
 	retRead, clientAddr, e := p.conn.ReadFromUDP(p.buf)
 	if e != nil {
+		log.Printf("read udp data e: %v\n", e)
 		return nil, e
 	}
 	if retRead <= 0 {
@@ -66,7 +67,8 @@ func (p *PackageDataProcess) ReadData() ([]byte, error) {
 	}
 
 	p.peerAddr = clientAddr
-	return p.buf[:retRead], nil
+	p.buf = p.buf[:retRead]
+	return p.buf, nil
 }
 func (p *PackageDataProcess) ParseHead() error {
 	e := p.Header.ParseHead(p.buf)

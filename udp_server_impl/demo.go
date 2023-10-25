@@ -124,6 +124,7 @@ func (s *UdpServer) Start() {
 		return
 	}
 
+	net.ListenPacket("udp", fmt.Sprintf("%v:%v", s.Cfg.Ip, s.Cfg.Port))
 	s.udpConn, e = net.ListenUDP("udp", s.addr)
 	if e != nil {
 		log.Printf("listen udp server fail, e: %v\n", e)
